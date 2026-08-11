@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>admin // GhostNode</title>
+    <meta name="robots" content="noindex" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👻</text></svg>" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+</head>
+<body>
+    <header class="topbar">
+        <div class="brand">ghostnode<small>// admin</small></div>
+        <nav>
+            <a href="/">view site</a>
+            <a href="#" id="logout" hidden>logout</a>
+        </nav>
+    </header>
+
+    <main class="wrap pad-top">
+
+        <!-- LOGIN -->
+        <section id="login-view" hidden>
+            <div class="term" style="max-width:460px;margin:8vh auto;">
+                <div class="term-head">
+                    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+                    <span class="term-title">auth — ghostnode</span>
+                </div>
+                <div class="term-body">
+                    <p class="prompt"><b>raven@ghostnode</b>:~$ login<span class="cursor"></span></p>
+                    <form id="login-form">
+                        <label for="u">username</label>
+                        <input id="u" name="username" autocomplete="username" autofocus />
+                        <label for="p">password</label>
+                        <input id="p" name="password" type="password" autocomplete="current-password" />
+                        <div style="margin-top:18px;">
+                            <button class="btn" type="submit">authenticate</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- DASHBOARD -->
+        <section id="dash-view" hidden>
+            <div class="row tight" style="justify-content:space-between;margin-bottom:8px;">
+                <h1 class="glitch" data-text="CONTROL" style="font-size:28px;">CONTROL</h1>
+                <button class="btn" id="new-post">+ new post</button>
+            </div>
+            <p class="prompt">posts in the node &middot; drafts included</p>
+            <div class="admin-list" id="admin-list"></div>
+        </section>
+
+        <!-- EDITOR -->
+        <section id="editor-view" hidden>
+            <div class="row tight" style="justify-content:space-between;margin-bottom:8px;">
+                <h1 class="glitch" data-text="COMPOSE" id="editor-title" style="font-size:26px;">COMPOSE</h1>
+                <button class="btn ghost" id="back-dash">&larr; back</button>
+            </div>
+
+            <form id="post-form">
+                <input type="hidden" id="edit-slug" />
+
+                <label for="title">title</label>
+                <input id="title" required />
+
+                <div class="row">
+                    <div>
+                        <label for="category">category</label>
+                        <select id="category">
+                            <option value="life">life</option>
+                            <option value="philosophy">philosophy</option>
+                            <option value="books">books</option>
+                            <option value="movies">movies</option>
+                            <option value="games">games</option>
+                            <option value="creations">creations</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="tags">tags (comma separated)</label>
+                        <input id="tags" placeholder="dune, sci-fi, reread" />
+                    </div>
+                </div>
+
+                <label for="excerpt">excerpt (optional — auto from body if blank)</label>
+                <input id="excerpt" />
+
+                <label>cover image (auto-compressed to webp)</label>
+                <div class="row tight">
+                    <button class="btn ghost" type="button" id="pick-cover">upload cover</button>
+                    <button class="btn danger" type="button" id="clear-cover" hidden>remove</button>
+                    <span class="sub" id="cover-info"></span>
+                </div>
+                <img class="preview-cover" id="cover-preview" alt="" />
+                <input type="hidden" id="cover-id" />
+
+                <label for="content">body (markdown)</label>
+                <div class="row tight" style="margin-bottom:6px;">
+                    <button class="btn ghost" type="button" id="insert-image">insert image</button>
+                    <button class="btn ghost" type="button" id="toggle-preview">toggle preview</button>
+                </div>
+                <textarea id="content" rows="16" placeholder="# heading&#10;&#10;write in **markdown**..."></textarea>
+                <div class="md" id="preview" hidden style="border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-top:10px;"></div>
+
+                <label class="switch" style="margin-top:16px;">
+                    <input type="checkbox" id="published" checked /> published (uncheck to save as draft)
+                </label>
+
+                <div class="row tight" style="margin-top:20px;">
+                    <button class="btn" type="submit" id="save-btn">save post</button>
+                    <button class="btn danger" type="button" id="delete-btn" hidden>delete</button>
+                </div>
+            </form>
+        </section>
+
+    </main>
+
+    <input type="file" id="file-input" accept="image/*" hidden />
+
+    <script type="module" src="/assets/js/admin.js"></script>
+</body>
+</html>

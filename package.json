@@ -1,19 +1,21 @@
 {
-  "name": "analytics-backup-server",
+  "name": "ghostnode-byraven",
   "version": "1.0.0",
-  "description": "Backup analytics pixel endpoint for playable ads. Receives GET pixel pings and stores them in MongoDB.",
+  "description": "GhostNode by Raven — a personal blog (life, philosophy, books, movies, games, creations). Express + MongoDB, deployed on Vercel.",
   "main": "server.js",
   "type": "module",
   "scripts": {
     "start": "node server.js",
+    "dev": "node --env-file=.env --watch server.js",
     "start:local": "node --env-file=.env server.js",
-    "dev": "node --env-file=.env --watch server.js"
+    "reset-db": "node --env-file=.env scripts/reset-db.js"
   },
   "engines": {
     "node": ">=20.6"
   },
   "dependencies": {
     "express": "^4.19.2",
+    "marked": "^12.0.2",
     "mongodb": "^6.8.0"
   }
 }

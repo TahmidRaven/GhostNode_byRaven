@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GhostNode by Raven</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👻</text></svg>" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+</head>
+<body>
+    <header class="topbar">
+        <div class="brand">ghostnode<small>// by raven</small></div>
+        <nav>
+            <a href="/">home</a>
+            <a href="/admin">admin</a>
+        </nav>
+    </header>
+
+    <main class="wrap">
+        <p class="pad-top"><a href="/">&larr; back to feed</a></p>
+        <article class="article" id="article">
+            <div class="empty">loading<span class="loading"></span></div>
+        </article>
+    </main>
+
+    <footer class="footer">ghostnode://raven</footer>
+
+    <script type="module">
+        import { api, esc, fmtDate } from '/assets/js/ghost.js';
+
+        const slug = decodeURIComponent(location.pathname.replace(/^\/post\//, '').replace(/\/$/, ''));
+        const box = document.getElementById('article');
+
+        (async () => {
+            try {
+                const { post } = await api(`/api/posts/${encodeURIComponent(slug)}`);
+                document.title = `${post.title} — GhostNode`;
+                const cover = post.coverUrl
+                    ? `<img class="cover" src="${esc(post.coverUrl)}" alt="" />` : '';
+                const draft = post.published ? '' : '<span class="badge draft">draft</span>';
+                const tags = (post.tags || [])
+                    .map((t) => `<span class="tag">${esc(t)}</span>`).join(' ');
+                box.innerHTML = `
+                    <div class="card-meta">
+                      <span class="badge">${esc(post.category)}</span>
+                      ${draft}
+                      <span>${esc(fmtDate(post.createdAt))}</span>
+                    </div>
+                    <h1>${esc(post.title)}</h1>
+                    ${cover}
+                    <div class="md" id="md"></div>
+                    ${tags ? `<div class="tags" style="margin-top:26px">${tags}</div>` : ''}`;
+                // server-rendered markdown (authored by the admin only)
+                document.getElementById('md').innerHTML = post.html || '';
+            } catch (err) {
+                box.innerHTML = err.status === 404
+                    ? `<div class="empty"><h1>404</h1><p>this signal doesn't exist.</p><a href="/">go home</a></div>`
+                    : `<div class="empty">signal lost: ${esc(err.message)}</div>`;
+            }
+        })();
+    </script>
+</body>
+</html>

@@ -1,7 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
-    { "source": "/ping", "destination": "/api/ping" },
-    { "source": "/health", "destination": "/api/health" }
+    { "source": "/(.*)", "destination": "/api/index" }
   ]
 }
