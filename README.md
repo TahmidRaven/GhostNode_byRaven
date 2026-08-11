@@ -1,4 +1,14 @@
-# 👻 GhostNode by Raven
+<p align="center">
+  <img src="public/assets/images/icon.webp" alt="GhostNode" width="120" />
+</p>
+
+<h1 align="center">GhostNode by Raven</h1>
+
+<p align="center">
+  <a href="BLOG_URL_HERE"><img src=".github/assets/blog-button.svg" alt="Check out the blog" height="52" /></a>
+</p>
+
+---
 
 My personal blog. I write here about life, philosophy, books I read, movies I
 watch, games I play, and things I make.
