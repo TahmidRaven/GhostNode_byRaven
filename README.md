@@ -32,55 +32,7 @@ It runs on free tiers: **Vercel** (hosting) + **MongoDB Atlas** (database).
 
 Categories: `life · philosophy · books · movies · games · creations`.
 
----
 
-## Run it on my machine
-
-```bash
-cp .env.example .env      # then fill in the values (see below)
-npm install
-npm run reset-db          # one-time: clears old data, sets up the database
-npm run dev               # http://localhost:3000
-```
-
-Open `http://localhost:3000`, go to `/admin`, log in, and write a post.
-
----
-
-## Settings (`.env`)
-
-| Key | What it is |
-|-----|------------|
-| `MONGO_URI` | MongoDB Atlas connection string. |
-| `DB_NAME` | Database name (`ghostnode`). |
-| `ADMIN_USER` / `ADMIN_PASS` | My admin login. |
-| `SESSION_SECRET` | Long random string that signs the login cookie. |
-| `PORT` | Local port (default `3000`). |
-
-Generate a fresh `SESSION_SECRET`:
-
-```bash
-node -e "console.log(require('crypto').randomBytes(48).toString('base64url'))"
-```
-
-> **Security note:** `.env` is git-ignored — never commit it. The password
-> currently in the connection string was shared in plaintext once, so it's worth
-> rotating in the Atlas dashboard.
-
----
-
-## Deploy (Vercel)
-
-1. Push to GitHub, import the repo in Vercel.
-2. In **Vercel → Project → Settings → Environment Variables**, add the same keys
-   from `.env` (`MONGO_URI`, `DB_NAME`, `ADMIN_USER`, `ADMIN_PASS`,
-   `SESSION_SECRET`).
-3. In **Atlas → Network Access**, allow Vercel to connect (`0.0.0.0/0` is the
-   simple option for a personal project).
-4. Deploy. `vercel.json` sends every request to the Express app, which serves
-   both the site and the API.
-
----
 
 ## How it's put together
 
@@ -98,5 +50,4 @@ public/             the front-end (HTML, the terminal-ghost CSS, the JS)
 **Data:** two collections — `posts` (title, slug, category, markdown body, tags,
 cover image, draft/published, dates) and `images` (the compressed WebP blobs).
 
-Posts are written in **Markdown**. Since I'm the only author, the markdown is
-rendered and shown as-is; don't paste in HTML you wouldn't trust yourself.
+Posts are written in **Markdown**. Since I'm the only author; and I quite like MD
