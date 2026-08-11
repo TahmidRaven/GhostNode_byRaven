@@ -152,9 +152,10 @@ a:hover { color: var(--green); text-shadow: var(--glow); }
 .hero { text-align: center; padding: 40px 10px 10px; }
 .ghost-ascii {
     color: var(--green); text-shadow: var(--glow);
-    /* 76-char-wide, 70-line fsociety art: small font keeps its footprint compact */
-    font-size: clamp(3px, 0.85vw, 6px); line-height: 1; white-space: pre; display: inline-block;
-    max-width: 100%; overflow-x: auto;
+    /* fsociety art: block (not inline-block) so it stacks above the title instead of
+       sitting beside it; text-align centers the short logo/footer lines under the skull */
+    font-size: 1px; line-height: 1; white-space: pre; display: block;
+    text-align: center; max-width: 100%; overflow-x: auto;
     animation: bob 4s ease-in-out infinite;
 }
 @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
