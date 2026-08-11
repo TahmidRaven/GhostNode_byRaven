@@ -5,7 +5,7 @@
 <h1 align="center">GhostNode by Raven</h1>
 
 <p align="center">
-  <a href="BLOG_URL_HERE"><img src=".github/assets/blog-button.svg" alt="Check out the blog" height="52" /></a>
+  <a href="ghostnode.dostoevsky.top"><img src=".github/assets/blog-button.svg" alt="Check out the blog" height="52" /></a>
 </p>
 
 ---
