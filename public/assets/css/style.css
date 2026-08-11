@@ -154,7 +154,7 @@ a:hover { color: var(--green); text-shadow: var(--glow); }
     color: var(--green); text-shadow: var(--glow);
     /* fsociety art: block (not inline-block) so it stacks above the title instead of
        sitting beside it; text-align centers the short logo/footer lines under the skull */
-    font-size: 1px; line-height: 1; white-space: pre; display: block;
+    font-size: 1.5px; line-height: 1; white-space: pre; display: block;
     text-align: center; max-width: 100%; overflow-x: auto;
     animation: bob 4s ease-in-out infinite;
 }
