@@ -47,11 +47,19 @@ $('logout').addEventListener('click', async (e) => {
 
 // ---- dashboard -------------------------------------------------------------
 
+// Fill the category autocomplete with categories already in use.
+function populateCats(categories = []) {
+    const dl = $('cat-options');
+    if (!dl) return;
+    dl.innerHTML = categories.map((c) => `<option value="${esc(c)}"></option>`).join('');
+}
+
 async function loadDashboard() {
     const list = $('admin-list');
     list.innerHTML = `<div class="empty">loading<span class="loading"></span></div>`;
     try {
-        const { posts } = await api('/api/posts?all=1');
+        const { posts, categories } = await api('/api/posts?all=1');
+        populateCats(categories);
         if (!posts.length) {
             list.innerHTML = `<div class="empty">no posts yet. hit <b>+ new post</b>.</div>`;
             return;

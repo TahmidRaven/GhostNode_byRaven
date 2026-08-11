@@ -1,13 +1,14 @@
-import { api, esc, fmtDate, GHOST, typewriter } from './ghost.js';
+import { api, esc, fmtDate, GHOST, HERO_ART, typewriter } from './ghost.js';
 
 // Home page: boot animation, category tabs, and the post feed.
 
-const CATS = ['all', 'life', 'philosophy', 'books', 'movies', 'games', 'creations'];
+// Categories are discovered from the posts, not hardcoded.
+let cats = ['all'];
 let active = 'all';
 
 function bootSequence() {
     const ghostEl = document.getElementById('ghost');
-    if (ghostEl) ghostEl.textContent = GHOST;
+    if (ghostEl) ghostEl.textContent = HERO_ART;
     const boot = document.getElementById('boot');
     if (boot) {
         boot.classList.remove('loading');
@@ -18,7 +19,7 @@ function bootSequence() {
 function renderCats() {
     const el = document.getElementById('cats');
     el.innerHTML = '';
-    for (const c of CATS) {
+    for (const c of cats) {
         const tab = document.createElement('button');
         tab.className = 'cat' + (c === active ? ' active' : '');
         tab.textContent = c;
@@ -54,7 +55,10 @@ async function loadFeed() {
     feed.innerHTML = `<div class="empty">loading<span class="loading"></span></div>`;
     try {
         const q = active === 'all' ? '' : `?category=${encodeURIComponent(active)}`;
-        const { posts } = await api(`/api/posts${q}`);
+        const { posts, categories } = await api(`/api/posts${q}`);
+        // Refresh the tabs from whatever categories exist now.
+        const next = ['all', ...(categories || [])];
+        if (next.join('|') !== cats.join('|')) { cats = next; renderCats(); }
         if (!posts.length) {
             feed.innerHTML = `
               <div class="empty">

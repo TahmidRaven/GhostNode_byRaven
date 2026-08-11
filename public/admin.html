@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>admin // GhostNode</title>
     <meta name="robots" content="noindex" />
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👻</text></svg>" />
+    <link rel="icon" type="image/webp" href="/assets/images/icon.webp" />
+    <link rel="apple-touch-icon" href="/assets/images/icon.webp" />
     <link rel="stylesheet" href="/assets/css/style.css" />
 </head>
 <body>
     <header class="topbar">
-        <div class="brand">ghostnode<small>// admin</small></div>
+        <div class="brand"><img class="brand-logo" src="/assets/images/icon.webp" alt="GhostNode mascot" />ghostnode<small>// admin</small></div>
         <nav>
             <a href="/">view site</a>
             <a href="#" id="logout" hidden>logout</a>
@@ -66,15 +67,10 @@
 
                 <div class="row">
                     <div>
-                        <label for="category">category</label>
-                        <select id="category">
-                            <option value="life">life</option>
-                            <option value="philosophy">philosophy</option>
-                            <option value="books">books</option>
-                            <option value="movies">movies</option>
-                            <option value="games">games</option>
-                            <option value="creations">creations</option>
-                        </select>
+                        <label for="category">category (type your own)</label>
+                        <input id="category" list="cat-options" required
+                               placeholder="philosophy, life, games…" autocomplete="off" />
+                        <datalist id="cat-options"></datalist>
                     </div>
                     <div>
                         <label for="tags">tags (comma separated)</label>

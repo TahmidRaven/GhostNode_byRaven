@@ -1,5 +1,21 @@
 /* Shared front-end helpers for GhostNode: API calls, toasts, small effects. */
 
+// Big glitch-mask hero art (original — an "hacker" vibe, not a copyrighted logo).
+export const HERO_ART = [
+    "     ______________________",
+    "    /                      \\",
+    "   |   .----.      .----.   |",
+    "   |  ( o..o )    ( o..o )  |",
+    "   |   `----'      `----'   |",
+    "   |         .----.         |",
+    "   |        ( wwww )        |",
+    "   |         `----'         |",
+    "    \\   \\________________/  /",
+    "     `.____________________.'",
+    "   [ we are ghostnode ] [ 01 ]",
+].join("\n");
+
+// Small mascot, used where the big art is too much (empty states).
 export const GHOST = [
     '    .-"""""-.',
     '   /  o   o  \\',

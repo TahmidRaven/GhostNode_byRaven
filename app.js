@@ -5,7 +5,7 @@ import { ObjectId } from 'mongodb';
 import { marked } from 'marked';
 
 import { getPosts, getImages } from './lib/db.js';
-import { CATEGORIES, slugify, normalizePost, autoExcerpt } from './lib/posts.js';
+import { slugify, normalizePost, normalizeCategory, autoExcerpt } from './lib/posts.js';
 import {
     checkLogin, signSession, setSessionCookie, clearSessionCookie,
     readSession, requireAuth,
@@ -80,21 +80,25 @@ app.get('/api/posts', async (req, res) => {
     try {
         const authed = Boolean(readSession(req));
         const wantAll = authed && req.query.all === '1';
-        const filter = {};
-        if (!wantAll) filter.published = { $ne: false };
-        if (req.query.category && CATEGORIES.includes(req.query.category)) {
-            filter.category = req.query.category;
-        }
+        const scope = wantAll ? {} : { published: { $ne: false } };
+        const filter = { ...scope };
+        if (req.query.category) filter.category = normalizeCategory(req.query.category);
 
         const limit = Math.min(Number(req.query.limit) || 50, 100);
         const skip = Math.max(Number(req.query.skip) || 0, 0);
 
         const col = await getPosts();
-        const [items, total] = await Promise.all([
+        const [items, total, categories] = await Promise.all([
             col.find(filter).sort({ createdAt: -1 }).skip(skip).limit(limit).toArray(),
             col.countDocuments(filter),
+            // The filter tabs: every category that exists in the visible scope.
+            col.distinct('category', scope),
         ]);
-        res.json({ posts: items.map((d) => publicPost(d)), total, categories: CATEGORIES });
+        res.json({
+            posts: items.map((d) => publicPost(d)),
+            total,
+            categories: categories.filter(Boolean).sort(),
+        });
     } catch (err) {
         console.error('[posts:list]', err.message);
         res.status(500).json({ error: 'failed to load posts' });
