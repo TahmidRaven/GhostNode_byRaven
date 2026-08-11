@@ -8,7 +8,13 @@ let active = 'all';
 
 function bootSequence() {
     const ghostEl = document.getElementById('ghost');
-    if (ghostEl) ghostEl.textContent = HERO_ART;
+    if (ghostEl) {
+        ghostEl.textContent = HERO_ART; // fallback until the art file loads
+        fetch('/assets/fsociety.ascii')
+            .then((r) => (r.ok ? r.text() : Promise.reject(r.status)))
+            .then((art) => { ghostEl.textContent = art; })
+            .catch(() => {}); // keep HERO_ART on failure
+    }
     const boot = document.getElementById('boot');
     if (boot) {
         boot.classList.remove('loading');
