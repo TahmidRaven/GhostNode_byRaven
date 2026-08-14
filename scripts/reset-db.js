@@ -8,7 +8,7 @@ import { MongoClient } from 'mongodb';
 
 const OLD_DB = 'playable_analytics';
 const OLD_COLLECTION = 'events';
-const NEW_DB = process.env.DB_NAME || 'ghostnode';
+const NEW_DB = process.env.DB_NAME || 'raven_data';
 
 async function main() {
     const uri = process.env.MONGO_URI;
